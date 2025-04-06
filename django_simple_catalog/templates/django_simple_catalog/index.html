@@ -1,0 +1,61 @@
+{% extends 'django_simple_catalog/base.html' %}
+
+
+{% block content %}
+<section class="text-center container">
+    <div class="row">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            {{ site_settings.home_page_description|safe }}
+        </div>
+    </div>
+</section>
+<hr>
+
+<!-- New Products Panel -->
+<section class="mt-5" >
+    <h3>New Products</h3>
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for product in new_products %}
+                    {% include "django_simple_catalog/partials/product_card.html" with product=product %}
+                {% empty %}
+                    <p>No new products.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="mt-3 text-center">
+        {% if new_products.has_previous %}
+        <a href="?new_page={{ new_products.previous_page_number }}&sale_page={{ sale_products.number }}" class="btn btn-outline-secondary btn-sm">Previous</a>
+        {% endif %}
+        {% if new_products.has_next %}
+        <a href="?new_page={{ new_products.next_page_number }}&sale_page={{ sale_products.number }}" class="btn btn-outline-secondary btn-sm">Next</a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- On Sale Panel -->
+<section class="mt-5">
+    <h3>On Sale</h3>
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for product in sale_products %}
+                {% include "django_simple_catalog/partials/product_card.html" with product=product %}
+            {% empty %}
+                <p>No sale items at the moment.</p>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+    <div class="mt-3 text-center">
+        {% if sale_products.has_previous %}
+        <a href="?sale_page={{ sale_products.previous_page_number }}&new_page={{ new_products.number }}" class="btn btn-outline-secondary btn-sm">Previous</a>
+        {% endif %}
+        {% if sale_products.has_next %}
+        <a href="?sale_page={{ sale_products.next_page_number }}&new_page={{ new_products.number }}" class="btn btn-outline-secondary btn-sm">Next</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

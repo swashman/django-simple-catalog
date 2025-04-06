@@ -1,0 +1,49 @@
+<div class="col">
+    <div class="card shadow-sm position-relative">
+        {% if product.sale_price %}
+        <span class="badge bg-danger position-absolute mt-2 ms-2">Sale</span>
+        {% endif %}
+        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" height="225">
+        <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.short_description }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#productModal-{{ product.id }}">
+                        More
+                    </button>
+                </div>
+                <div class="ms-auto text-end">
+                {% if product.sale_price %}
+                    <span class="text-decoration-line-through text-dark fw-semibold me-2" style="opacity: 0.8;">
+                    {{ product.price }}
+                    </span>
+                    <span class="fw-bolder text-danger" style="font-size: 1.2rem;">
+                    {{ product.sale_price }}
+                    </span>
+                {% else %}
+                    <span class="fw-bold">{{ product.price }}</span>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="productModal-{{ product.id }}" tabindex="-1" aria-labelledby="productModalLabel-{{ product.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel-{{ product.id }}">{{ product.name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ product.long_description }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -53,7 +53,7 @@ jobs:
   # Run Test Coverage
   test-coverage:
     needs: [ pre-commit ]
-    name: AA Latest (Python ${{ matrix.python-version }})
+    name: Simple Catalog (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
 
     strategy:
@@ -61,8 +61,6 @@ jobs:
       matrix:
         python-version:
           # https://endoflife.date/python
-          - '3.10'  # [EOL] End of Life: 31 Oct 2026
-          - '3.11'  # [EOL] End of Life: 31 Dec 2027
           - '3.12'  # [EOL] End of Life: 31 Dec 2028
           - '3.13'  # [EOL] End of Life: 31 Oct 2029
 
@@ -89,17 +87,17 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      # Install Tox and any other packages
-      - name: Install Tox and any other packages
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade tox tox-gh-actions
+      # # Install Tox and any other packages
+      # - name: Install Tox and any other packages
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     python -m pip install --upgrade tox tox-gh-actions
 
-      # Run Tox with the specified environment
-      - name: Run Tox
-        env:
-          TOX_ENV: allianceauth-latest
-        run: tox -v -e ${{ env.TOX_ENV }}
+      # # Run Tox with the specified environment
+      # - name: Run Tox
+      #   env:
+      #     TOX_ENV: py312
+      #   run: tox -v -e ${{ env.TOX_ENV }}
 
       # Upload coverage to Codecov
       - name: Upload Coverage

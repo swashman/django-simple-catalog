@@ -3,7 +3,11 @@
         {% if product.sale_price %}
         <span class="badge bg-danger position-absolute mt-2 ms-2">Sale</span>
         {% endif %}
-        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" height="225">
+        {% if product.image and product.image.url %}
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" height="225">
+        {% else %}
+            <img src="https://placehold.co/225x225?text=No\nImage" class="card-img-top" alt="No image available" height="225">
+        {% endif %}
         <div class="card-body">
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">{{ product.short_description }}</p>

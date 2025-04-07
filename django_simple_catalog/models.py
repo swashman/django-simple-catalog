@@ -80,7 +80,7 @@ class Category(models.Model):
         return self.subcategories.exists()
 
 
-def product_image_upload_to(filename):
+def product_image_upload_to(instance, filename):  # pylint: disable=unused-argument
     """Generate a unique path for the uploaded image."""
     # Generate a unique UUID for the file
     unique_id = uuid.uuid4().hex  # Generates a unique identifier

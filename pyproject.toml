@@ -30,6 +30,7 @@ classifiers = [
 dynamic = [ "description", "version" ]
 dependencies = [
     "django>=5.2",
+    "mysqlclient>=2.2.7",
     "pillow>=11.1",
 ]
 

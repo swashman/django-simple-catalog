@@ -38,7 +38,7 @@ class SiteSettings(models.Model):
 class Category(models.Model):
     """Category model."""
 
-    name = models.CharField(max_length=100, blank=False, null=False)  # Required field
+    name = models.CharField(max_length=100, blank=False, null=False)
     slug = models.SlugField(unique=True)
     parent = models.ForeignKey(
         "self",
@@ -47,10 +47,8 @@ class Category(models.Model):
         blank=True,
         related_name="subcategories",
     )
-    description = models.TextField(blank=True, null=True)  # Optional field
-    order = models.IntegerField(
-        default=100, blank=False, null=False
-    )  # New field for ordering
+    description = models.TextField(blank=True, null=True)
+    order = models.IntegerField(default=100, blank=False, null=False)
 
     class Meta:
         """Meta class."""
@@ -58,23 +56,27 @@ class Category(models.Model):
         verbose_name_plural = "Categories"
 
     def __str__(self):
-        """Return the category name."""
         return self.name
 
     def save(self, *args, **kwargs):
-        """Save the category and generate the slug if not set."""
-        # Automatically generate the slug from the name if not set
-        if not self.slug:
-            self.slug = slugify(self.name)
+        """Generate unique slug based on name and parent, and update if name changes."""
+        # Check if slug needs to be updated (on create or if name changed)
+        if (
+            not self.pk
+            or Category.objects.filter(pk=self.pk).exclude(name=self.name).exists()
+        ):
+            base_slug = slugify(self.name)
+            if self.parent:
+                base_slug = f"{slugify(self.parent.name)}-{base_slug}"
+
+            self.slug = base_slug
+
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         """Return the absolute URL for the category detail page."""
-        return reverse(
-            "category_detail", kwargs={"slug": self.slug}
-        )  # Assuming you have a detail page for categories
+        return reverse("category_detail", kwargs={"slug": self.slug})
 
-    # Method to check if the category has subcategories
     def has_subcategories(self):
         """Check if the category has subcategories."""
         return self.subcategories.exists()

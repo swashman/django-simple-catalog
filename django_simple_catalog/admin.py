@@ -14,6 +14,18 @@ class CategoryAdminForm(forms.ModelForm):
         model = Category
         fields = "__all__"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Only show top-level categories (i.e. those without a parent) as parent options
+        self.fields["parent"].queryset = Category.objects.filter(parent__isnull=True)
+
+        # Optional: if editing an existing object, exclude itself from parent options to prevent circular relationships
+        if self.instance.pk:
+            self.fields["parent"].queryset = self.fields["parent"].queryset.exclude(
+                pk=self.instance.pk
+            )
+
     def clean_parent(self):
         parent = self.cleaned_data.get("parent")
         if parent and parent.parent:

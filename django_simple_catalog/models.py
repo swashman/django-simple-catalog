@@ -59,17 +59,31 @@ class Category(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        """Generate unique slug based on name and parent, and update if name changes."""
-        # Check if slug needs to be updated (on create or if name changed)
-        if (
-            not self.pk
-            or Category.objects.filter(pk=self.pk).exclude(name=self.name).exists()
-        ):
+        """Generate unique slug based on name and parent, update if name or parent changed."""
+
+        update_slug = False
+
+        if not self.pk:
+            # New object — always generate slug
+            update_slug = True
+        else:
+            # Existing object — check if name or parent changed
+            old = Category.objects.get(pk=self.pk)
+            if old.name != self.name or old.parent_id != self.parent_id:
+                update_slug = True
+
+        if update_slug:
             base_slug = slugify(self.name)
             if self.parent:
                 base_slug = f"{slugify(self.parent.name)}-{base_slug}"
 
-            self.slug = base_slug
+            slug = base_slug
+            counter = 1
+            while Category.objects.exclude(pk=self.pk).filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
 
         super().save(*args, **kwargs)
 

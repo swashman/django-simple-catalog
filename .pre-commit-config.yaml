@@ -127,7 +127,7 @@ repos:
         description: Ensure that files end with a newline.
 
   - repo: https://github.com/eslint/eslint
-    rev: 9113105f77e5c3561335ad00788af9e43cb4265f  # frozen: v9.24.0
+    rev: e81ba92a6d86968cacab5d06f83a7c9b154e5906  # frozen: v9.28.0
     hooks:
       - id: eslint
         name: ESLint
@@ -139,7 +139,7 @@ repos:
 #          - globals@15.14.0  # https://github.com/sindresorhus/globals/releases/latest
 
   - repo: https://github.com/thibaudcolas/pre-commit-stylelint
-    rev: 1a0aa3c94f0862ff3fb0a520713391fd0dac66ff  # frozen: v16.17.0
+    rev: 2aae575fddbe3f26961115860542dbd9d0e8f91d  # frozen: v16.20.0
     hooks:
       - id: stylelint
         name: Stylelint
@@ -187,7 +187,7 @@ repos:
         description: Check for compliance with the definitions in the EditorConfig file.
 
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: 50d352812a07a85c73192ebe6459fab660f9c936  # frozen: 1.24.0
+    rev: 700530171ecf380bc829a64388f49d14ecd61c53  # frozen: 1.25.0
     hooks:
       - id: django-upgrade
         name: Django upgrade
@@ -196,7 +196,7 @@ repos:
           - --target-version=4.2  # Minimum supported Django version for AA. Update as needed.
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: ce40a160603ab0e7d9c627ae33d7ef3906e2d2b2  # frozen: v3.19.1
+    rev: 37bfa06d791fd38fb4e54910b36a2ff57641b074  # frozen: v3.20.0
     hooks:
       - id: pyupgrade
         name: PyUpgrade
@@ -273,7 +273,7 @@ repos:
         description: Format the tox.ini file.
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: 57b6ff7bf72affdd12c7f3fd6de761ba18a33b3a  # frozen: v2.5.1
+    rev: 8184a5b72f4a8fcd003b041ecb04c41a9f34fd2b  # frozen: v2.6.0
     hooks:
       - id: pyproject-fmt
         name: pyproject.toml formatter
@@ -284,7 +284,7 @@ repos:
           - tox==4.24.1  # https://github.com/tox-dev/tox/releases/latest
 
   - repo: https://github.com/pylint-dev/pylint
-    rev: 7ac5a4d4f77576df3a00e63f86ca86e0e1780b47  # frozen: v3.3.6
+    rev: f798a4a3508bcbb8ad0773ae14bf32d28dcfdcbe  # frozen: v3.3.7
     hooks:
       - id: pylint
         name: Pylint
@@ -300,7 +300,7 @@ repos:
         description: Validate the pyproject.toml file.
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: a167de9d5f4e87e1cdb16cb560aa704b79b6f655  # frozen: 0.32.1
+    rev: 06e4cc849d03f3a59ca223a4046f4bb5bb2aba6d  # frozen: 0.33.0
     hooks:
       - id: check-github-actions
         name: Check GitHub Actions
